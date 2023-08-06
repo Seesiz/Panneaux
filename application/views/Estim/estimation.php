@@ -1,16 +1,18 @@
 <h3 class="position-relative p-3"><b class="color-primary">Maintenant</b>, choisissez les colonnes approprier aux calculs:</h3>
 <div class="container">
-    <div class="choice col-3">
-        <h4 class="col-12">Les colonnes à choisir:</h4>
-        <label for="date">Colonne date:</label>
-        <select name="date-column" id="date" class="choix form-control" style="background-color: rgb(83, 83, 83)"></select>
-        <label for="jirama">Colonne JIRAMA:</label>
-        <select name="jirama-column" id="jirama" class="choix form-control" style="background-color: rgb(252, 252, 78)"></select>
-        <label for="panneaux">Colonne Panneaux:</label>
-        <select name="panneaux-column" id="panneaux" class="choix form-control" style="background-color: #5661C3"></select>
-        <br>
-        <button class="btn btn-primary col-12">Valider</button>
-    </div>
+    <form action="" method="post">
+        <div class="choice col-3">
+            <h4 class="col-12">Les colonnes à choisir:</h4>
+            <label for="date">Colonne date:</label>
+            <select name="date-column" id="date" class="choix form-control" style="background-color: rgb(83, 83, 83)"></select>
+            <label for="jirama">Colonne JIRAMA:</label>
+            <select name="jirama-column" id="jirama" class="choix form-control" style="background-color: rgb(252, 252, 78)"></select>
+            <label for="panneaux">Colonne Panneaux:</label>
+            <select name="panneaux-column" id="panneaux" class="choix form-control" style="background-color: #5661C3"></select>
+            <br>
+            <button class="btn btn-primary col-12">Valider</button>
+        </div>
+    </form>
     <div class="data col-8">
         <h4 class="d-flex"><b class="col-5">Les données recueillies: </b></h4>
         <div class="sheet">
