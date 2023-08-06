@@ -1,0 +1,163 @@
+@font-face {
+    font-family: "REM";
+    src: url("../fonts/REM/REM-Regular.ttf");
+}
+
+:root{
+    --primary: #5661C3;
+
+    --text-font: "REM", Arial, sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(white);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: #5661c36e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+* {
+    font-family: var(--text-font);
+    transition: 0.3s;
+}
+
+body{
+    overflow: hidden;
+}
+
+.container{
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.start{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 0px;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    box-shadow: 15px 15px var(--primary);
+    height:65vh;
+}
+
+.begin{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    backdrop-filter: blur(10px);
+    background-color: #5661c39d;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.start:hover{
+    transform: translate(15px, 15px);
+    box-shadow: 0px 0px black;
+    border: none;
+}
+
+.start:hover .begin{
+    display: inherit;
+}
+
+.start-btn{
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    border: 2px solid white;
+    padding: 2% 10%;
+}
+
+.start-btn:hover{
+    cursor: pointer;
+    background: white;
+    color: var(--primary);
+}
+
+.upload-file{
+    position: absolute;
+    display: none;
+    background-color: white;
+    box-shadow: 0px 0px 100vh 100vh rgba(0, 0, 0, 0.498);
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    padding: 2%;
+}
+
+.close{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: none;
+}
+
+.form-start{
+    height: 60vh;
+    overflow-y: scroll;
+    padding: 2%;
+}
+
+.bg-primary{
+    background: var(--primary);
+}
+.data{
+    height: 75vh;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    padding: 2%;
+}
+
+.sheet{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.table td, .table th{
+    font-size: 10px;
+    position: relative;
+    text-align: center;
+    width: auto;
+}
+
+.color-primary{
+    color: var(--primary);
+}
+
+.loadingDiv{
+    position: absolute;
+    height: 100%;
+}
+
+.loading{
+    z-index: 4;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8%;
+    padding: 2%;
+    backdrop-filter: blur(10px);
+    background-color: #5661c39d;
+    border-radius: 12px;
+    box-shadow: 0px 0px 100vh 100vh rgba(0, 0, 0, 0.498);
+}
