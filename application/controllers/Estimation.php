@@ -39,18 +39,18 @@ class Estimation extends CI_Controller {
                         if(!isset($data["date"][date('d/M/Y',strtotime($row[$date]))][date('H',strtotime($row[$date]))])){
                             $data["date"][date('d/M/Y',strtotime($row[$date]))]["jirama"][date('H',strtotime($row[$date]))] = 0;
                             $data["date"][date('d/M/Y',strtotime($row[$date]))]["panneaux"][date('H',strtotime($row[$date]))] = 0;
-                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["nbr"][date('H',strtotime($row[$date]))] = 0;
                         }
                         $data["date"][date('d/M/Y',strtotime($row[$date]))]["jirama"][date('H',strtotime($row[$date]))] += $row[$jirama];
                         $data["date"][date('d/M/Y',strtotime($row[$date]))]["panneaux"][date('H',strtotime($row[$date]))] += $row[$panneaux];
-                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["nbr"][date('H',strtotime($row[$date]))] += 1;
                     }
                     $i++;
                 }
 
-                foreach($data['date'] as $row){
-                    foreach($row["panneaux"] as $hour){
-                        $hour /= 10; 
+                foreach(array_keys($data['date']) as $row){
+                    $data['date'][$row]['journalier'] = 0;
+                    foreach($data['date'][$row]['panneaux'] as $hour){
+                        $hour /= 10;
+                        $data['date'][$row]['journalier'] += $hour;
                     }
                 }
                 
