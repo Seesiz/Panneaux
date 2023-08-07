@@ -23,6 +23,7 @@ class Estimation extends CI_Controller {
     
                 $data["sumPV"] = 0;
                 $data["sumJI"] = 0;
+                $i = 0;
                 foreach($table as $row){
                     try{
                         if(is_numeric($row[$jirama])) {
@@ -34,6 +35,20 @@ class Estimation extends CI_Controller {
                     } catch(Exception $e){
                         redirect('Accueil/start?error='.$e);
                     }
+                    if($i != 0){
+                        if(!isset($data["date"][date('d/M/Y',strtotime($row[$date]))])){
+                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["jirama"] = 0;
+                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["panneaux"] = 0;
+                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["nbr"] = 0;
+                        }
+                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["jirama"] += $row[$jirama];
+                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["panneaux"] += $row[$panneaux];
+                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["nbr"] += 1;
+                    }
+                    $i++;
+                } 
+                foreach($data["date"] as $row){
+                    $row["jirama"] /= $row["nbr"];
                 }
                 $this->load->view("Estim/result", $data);
                 $this->load->view("component/footer");

@@ -91,6 +91,10 @@
             prec2 = $("#panneaux").val();
         });
 
+        setInterval(function(){
+            $('.er').hide();
+        }, 4000);
+
         var count = 0;
         $(".choice").on("submit", function(e){
             if($('#date').val() == $('#jirama').val() || 
@@ -100,9 +104,6 @@
                 console.log("Try:"+count);
                 count++;
                 $('.er').show();
-                setInterval(function(){
-                    $('.er').hide();
-                }, 4000);
                 if(count>42){
                     $('.er').text("Serieusement, ceci est un outil serieux, ne faites pas l'imbécile!");
                 } if(count>100){
