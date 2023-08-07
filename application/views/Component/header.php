@@ -10,7 +10,7 @@
     <title><?php echo $titlePage ?></title>
 </head>
 <?php if(isset($_GET['error'])) { ?>
-    <div class="error col-12 d-flex justify-content-evenly m-4">
+    <div class="position-absolute error col-12 d-flex justify-content-evenly m-4" style="z-index: 10">
         <div class="alert alert-danger col-5 text-center" role="alert">
             <?php echo $_GET['error']; ?>
         </div>

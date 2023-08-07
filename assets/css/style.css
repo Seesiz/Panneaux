@@ -5,6 +5,7 @@
 
 :root{
     --primary: #5661C3;
+    --background: #e8eaff;
 
     --text-font: "REM", Arial, sans-serif;
 }
@@ -36,13 +37,14 @@ body{
     overflow: hidden;
 }
 
-.container{
+.content{
+    max-width: 100%;
     display: flex;
     justify-content: space-evenly;
-    position: absolute;
     width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+    position: absolute;
+    height: 100%;
+    align-items: center;
 }
 
 .start{
@@ -160,4 +162,24 @@ body{
     background-color: #5661c39d;
     border-radius: 12px;
     box-shadow: 0px 0px 100vh 100vh rgba(0, 0, 0, 0.498);
+}
+
+.result{
+    padding: 2%;
+    background-color: white;
+}
+
+.box-value{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.box-result{
+    text-align: center;
+    background-color: var(--background);
+    height: 200px;
+    width: 200px;
+    align-items: center;
+    border-radius: 12px;
 }

@@ -1,8 +1,8 @@
-<div class="container col-12">
-    <div class="start col-7">
-        <img src="<?php echo base_url("assets/img/background.jpeg"); ?>" height="100%">
-        <h4 class="p-5"> <b>Bienvenue.</b> </h2>
-        <div class="begin">
+<div class="content col-12">
+    <div class="start col-8">
+        <img src="<?php echo base_url("assets/img/background.jpeg"); ?>" class="col-9" height="100%" width="100%">
+        <h4 class="p-5 col-3"> <b>Bienvenue.</b> </h2>
+        <div class="begin col-12">
             <h5 class="start-btn">COMMENCER</h5>
         </div>
     </div>
@@ -24,7 +24,7 @@
                     <label class="input-group-text" for="PU">Ar</label>
                 </div>
             </div>
-            <button class="btn btn-primary col-12" style="margin-top: 10px" value="start">Continuer</button>
+            <button class="btn btn-primary col-12" style="margin-top: 10px" name="start" value="start">Continuer</button>
         </form>
     </div>
 </div>
