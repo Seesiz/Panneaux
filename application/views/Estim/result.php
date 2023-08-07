@@ -6,7 +6,7 @@
         color: #5661C3;
     }
 </style>
-<h3 class="position-absolute p-3"><b class="color-primary">Finalement</b>, voici les resultats:</h3>
+<h1 class="position-absolute p-3"><b class="color-primary">Finalement</b>, voici les resultats:</h1>
 
 <div class="content">
     <div class="d-block col-9">
@@ -30,4 +30,6 @@
         </div>
     </div>
 </div>
+
+<?php echo var_dump($date) ?>
 

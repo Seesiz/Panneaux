@@ -36,20 +36,24 @@ class Estimation extends CI_Controller {
                         redirect('Accueil/start?error='.$e);
                     }
                     if($i != 0){
-                        if(!isset($data["date"][date('d/M/Y',strtotime($row[$date]))])){
-                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["jirama"] = 0;
-                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["panneaux"] = 0;
-                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["nbr"] = 0;
+                        if(!isset($data["date"][date('d/M/Y',strtotime($row[$date]))][date('H',strtotime($row[$date]))])){
+                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["jirama"][date('H',strtotime($row[$date]))] = 0;
+                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["panneaux"][date('H',strtotime($row[$date]))] = 0;
+                            $data["date"][date('d/M/Y',strtotime($row[$date]))]["nbr"][date('H',strtotime($row[$date]))] = 0;
                         }
-                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["jirama"] += $row[$jirama];
-                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["panneaux"] += $row[$panneaux];
-                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["nbr"] += 1;
+                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["jirama"][date('H',strtotime($row[$date]))] += $row[$jirama];
+                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["panneaux"][date('H',strtotime($row[$date]))] += $row[$panneaux];
+                        $data["date"][date('d/M/Y',strtotime($row[$date]))]["nbr"][date('H',strtotime($row[$date]))] += 1;
                     }
                     $i++;
-                } 
-                foreach($data["date"] as $row){
-                    $row["jirama"] /= $row["nbr"];
                 }
+
+                foreach($data['date'] as $row){
+                    foreach($row["panneaux"] as $hour){
+                        $hour /= 10; 
+                    }
+                }
+                
                 $this->load->view("Estim/result", $data);
                 $this->load->view("component/footer");
             } else {
