@@ -4,10 +4,15 @@
 }
 
 :root{
-    --primary: #5661C3;
-    --background: #e8eaff;
+    --primary: #317AC1;
+    --background: #e0f5ff6c;
 
     --text-font: "REM", Arial, sans-serif;
+}
+
+@keyframes attract{
+    from{transform: translateX(-100%);}
+    to{transform: translateX(0%);}
 }
 
 ::-webkit-scrollbar {
@@ -22,6 +27,7 @@
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background: #5661c36e;
+    color: #dfc69c;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -31,10 +37,12 @@
 * {
     font-family: var(--text-font);
     transition: 0.3s;
+    color: #384454;
 }
 
 body{
     overflow: hidden;
+    background-color: var(--background);
 }
 
 .content{
@@ -135,7 +143,7 @@ body{
     overflow-x: scroll;
 }
 
-.table td, .table th{
+.t td, .t th{
     font-size: 10px;
     position: relative;
     text-align: center;
@@ -152,7 +160,7 @@ body{
 }
 
 .loading{
-    z-index: 4;
+    z-index: 12;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -182,4 +190,9 @@ body{
     width: 200px;
     align-items: center;
     border-radius: 12px;
+}
+
+.choice{
+    animation-name: attract;
+    animation-duration: 0.7s;
 }

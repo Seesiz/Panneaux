@@ -6,21 +6,46 @@
 
 <h3 class="position-absolute p-3"><b class="color-primary">Maintenant</b>, choisissez les colonnes approprier aux calculs:</h3>
 <div class="content">
-    <form action="<?php echo site_url("Estimation") ?>" method="post" class="choice col-3">
+    <form action="<?php echo site_url("Estimation") ?>" method="post" class="position-relative choice col-3">
         <h4 class="col-12">Les colonnes à choisir:</h4>
         <label for="date">Colonne date:</label>
-        <select name="date-column" id="date" class="choix form-control" style="background-color: rgb(83, 83, 83)"></select><br>
+        <select name="date-column" id="date" class="choix form-control" style="background-color: #AD956B"></select><br>
         <label for="jirama">Colonne JIRAMA:</label>
-        <select name="jirama-column" id="jirama" class="choix form-control" style="background-color: rgb(252, 252, 78)"></select><br>
+        <select name="jirama-column" id="jirama" class="choix form-control" style="background-color: #E1A624"></select><br>
         <label for="panneaux">Colonne Panneaux:</label>
-        <select name="panneaux-column" id="panneaux" class="choix form-control" style="background-color: #5661C3"></select>
+        <select name="panneaux-column" id="panneaux" class="choix form-control" style="background-color: #317AC1"></select>
         <br>
-        <button class="btn btn-primary col-12" id="go">Valider</button>
+        <button type="button" class="btn btn-success col-12" data-toggle="modal" data-target="#exampleModalCenter">
+            Valider
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Validation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Vous êtes sûr de votre choix?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
+                <button name="valider" class="btn btn-secondary">Oui</button>
+            </div>
+            </div>
+        </div>
+        </div>
     </form>
-    <div class="data col-8">
+
+
+    <div class="data col-8 bg-white">
         <h4 class="d-flex"><b class="col-5">Les données recueillies: </b></h4>
         <div class="sheet">
-            <table class="table table-striped">
+            <table class="table t table-striped">
                 <?php 
                     $data = $table->toArray();
                     $i = 1;
@@ -50,6 +75,7 @@
     </div>
 </div>
 
+
 <script>
     $(document).ready(function(){
         let i = 0;
@@ -64,27 +90,32 @@
             i++;
         });
 
-        //Code design, à ne pas toucher
+        /*
+            Code design, à ne pas toucher
+        */
+
         $("#date").on("change", function(){
-            $('.col_'+$("#date").val()).css("background", "rgb(83, 83, 83)");
+            $('.col_'+$("#date").val()).css("background", "#AD956B");
             $('.col_'+$("#date").val()).css("color", "white");
-            $('.colu_'+$("#date").val()).css("background", "rgb(154, 154, 154)");
+            $('.colu_'+$("#date").val()).css("background", "#cab692");
             $('.col_'+prec).css("background", "none");
             $('.colu_'+prec).css("background", "none");
             $('.col_'+prec).css("color", "black");
             prec = $("#date").val();
         });
         $("#jirama").on("change", function(){
-            $('.col_'+$("#jirama").val()).css("background", "rgb(252, 252, 78)");
-            $('.colu_'+$("#jirama").val()).css("background", "rgb(254, 254, 137)");
+            $('.col_'+$("#jirama").val()).css("background", "#E1A624");
+            $('.colu_'+$("#jirama").val()).css("background", "#dfc69c");
+            $('.col_'+$("#jirama").val()).css("color", "white");
             $('.col_'+prec1).css("background", "none");
             $('.colu_'+prec1).css("background", "none");
+            $('.col_'+prec1).css("color", "black");
             prec1 = $("#jirama").val();
         });
         $("#panneaux").on("change", function(){
-            $('.col_'+$("#panneaux").val()).css("background", "#5661C3");
+            $('.col_'+$("#panneaux").val()).css("background", "#317AC1");
             $('.col_'+$("#panneaux").val()).css("color", "white");
-            $('.colu_'+$("#panneaux").val()).css("background", "#5661c36e");
+            $('.colu_'+$("#panneaux").val()).css("background", "#e0f5ff");
             $('.col_'+prec2).css("background", "none");
             $('.colu_'+prec2).css("background", "none");
             $('.col_'+prec2).css("color", "black");
