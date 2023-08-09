@@ -71,7 +71,7 @@ class Accueil extends CI_Controller {
 			
 			$data['table'] = $this->sheet->getData('DATA/sheet.xlsx');
 
-			$this->session->set_flashdata("jirama", $_POST["PU"]);
+			$this->session->set_tempdata("jirama", $_POST["PU"], 600);
 
 			$this->load->view('Estim/estimation', $data);
 			$this->load->view('component/footer');

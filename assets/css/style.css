@@ -54,6 +54,15 @@ body{
     align-items: center;
 }
 
+.content-result{
+    max-width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+}
+
 .start{
     display: flex;
     justify-content: space-evenly;
@@ -178,16 +187,18 @@ body{
 
 .box-value{
     position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    width: 100%;
 }
 
 .box-result{
+    margin-bottom: 10px;
+    position: relative;
     text-align: center;
+    display: flex;
+    align-items: center;
     background-color: var(--background);
     height: 200px;
     width: 200px;
-    align-items: center;
     border-radius: 12px;
 }
 

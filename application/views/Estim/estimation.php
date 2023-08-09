@@ -6,7 +6,7 @@
 
 <h3 class="position-absolute p-3"><b class="color-primary">Maintenant</b>, choisissez les colonnes approprier aux calculs:</h3>
 <div class="content">
-    <form action="<?php echo site_url("Estimation") ?>" method="post" class="position-relative choice col-3">
+    <form action="<?php echo site_url("Estimation") ?>" method="post" class="position-relative choice col-md-3 col-10">
         <h4 class="col-12">Les colonnes à choisir:</h4>
         <label for="date">Colonne date:</label>
         <select name="date-column" id="date" class="choix form-control" style="background-color: #AD956B"></select><br>
@@ -42,7 +42,7 @@
     </form>
 
 
-    <div class="data col-8 bg-white">
+    <div class="data col-8 bg-white d-none d-md-block">
         <h4 class="d-flex"><b class="col-5">Les données recueillies: </b></h4>
         <div class="sheet">
             <table class="table t table-striped">
@@ -140,8 +140,6 @@
                     $('.er').text("Rafraichissez la page si vous voulez continuer!");
                     window.open("https://www.youtube.com/watch?v=W-fFHeTX70Q&pp=ygUIYmV0aG92ZW4%3D");
                 }
-            } else {
-                e.submit();
             }
         });
     });

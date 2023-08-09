@@ -44,9 +44,9 @@
 </div>
 <?php } ?>
 
-<h1 class="position-absolute p-3"><b class="color-primary">Finalement</b>, voici les resultats:</h1>
+<h1 class="position-relative p-3"><b class="color-primary">Finalement</b>, voici les resultats:</h1>
 
-<div class="content">
+<div class="content-result">
     <div class="d-block col-9">
         <h3 class="col-12 text-center">Liste des données journalières:</h3>
         <div class="col-12 consom" style="height: 0vh; overflow-y: scroll">
@@ -99,9 +99,9 @@
         </div>
         <button class="btn btn-secondary col-12 afficher1"><i class="fa fa-eye" style="color: white"></i></button>
 
-        <div class="result col-11 g-2 justify-content-evenly m-5">
+        <div class="result col-12 justify-content-evenly mt-3">
             <h3 class="col-12 text-center">Resultat:</h3>
-            <div class="col-12 d-flex justify-content-evenly mb-3">
+            <div class="col-12 d-md-flex d-grid justify-content-evenly mb-3">
                 <span class="box-result"><div class="box-value"><h5>Durée des données</h5><p class="duree"><?php echo sizeof($date)." j" ?></p></div></span>
                 <span class="box-result"><div class="box-value"><h5>Jirama</h5><p><?php echo $sumJI." KW" ?></p></div></span>
                 <span class="box-result"><div class="box-value"><h5>Panneaux</h5><p><?php echo $sumPV." KW" ?></p></div></span>
@@ -124,56 +124,56 @@
                 } ?>
             </div>
         </div>
+        <a href="<?php echo site_url("Accueil") ?>"><button class="btn btn-primary col-12 col-md-1 mt-3" style="float: right"><i class="fa fa-arrow-rotate-right" style="color: white"></i></button></a>
     </div>
 </div>
 <script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+    $(document).ready(function(){
+        var show =false;
+        var showM =false;
+        setInterval(function(){
+            $('.er').hide();
+        }, 4000);
+    
+        $('.afficher').on("click", function(){
+            if(!show){
+                $('.consom').css("height","30vh");
+                show = true;
+                $(this).html('<i class="fa fa-eye-slash" style="color: white"></i>');
+            } else{
+                $('.consom').css("height","0vh");
+                show = false;
+                $(this).html('<i class="fa fa-eye" style="color: white"></i>');
+            }
+        });
+        $('.afficher1').on("click", function(){
+            if(!showM){
+                $('.consomM').css("height","30vh");
+                showM = true;
+                $(this).html('<i class="fa fa-eye-slash" style="color: white"></i>');
+            } else{
+                $('.consomM').css("height","0vh");
+                showM = false;
+                $(this).html('<i class="fa fa-eye" style="color: white"></i>');
+            }
+        });
+        $('.delete').on("click", function() {
+        var clickedButton = $(this);
+    
+        $.ajax({
+            url: "<?php echo site_url('Estimation/delete')?>",
+            method: "GET",
+            data: {id: clickedButton.data("id")},
+            success: function(data) {
+                $(".row_" + clickedButton.data("id")).remove();
+                $(".duree").html((parseInt($('.duree').text())-1)+" j");
+            },
+            error: function() {
+                alert("Une erreur s'est produite lors de la requête.");
+            }
+        });
     })
 
-    var show =false;
-    var showM =false;
-    setInterval(function(){
-        $('.er').hide();
-    }, 4000);
-
-    $('.afficher').on("click", function(){
-        if(!show){
-            $('.consom').css("height","30vh");
-            show = true;
-            $(this).html('<i class="fa fa-eye-slash" style="color: white"></i>');
-        } else{
-            $('.consom').css("height","0vh");
-            show = false;
-            $(this).html('<i class="fa fa-eye" style="color: white"></i>');
-        }
-    });
-    $('.afficher1').on("click", function(){
-        if(!showM){
-            $('.consomM').css("height","30vh");
-            showM = true;
-            $(this).html('<i class="fa fa-eye-slash" style="color: white"></i>');
-        } else{
-            $('.consomM').css("height","0vh");
-            showM = false;
-            $(this).html('<i class="fa fa-eye" style="color: white"></i>');
-        }
-    });
-    $('.delete').on("click", function() {
-    var clickedButton = $(this);
-
-    $.ajax({
-        url: "<?php echo site_url('Estimation/delete')?>",
-        method: "GET",
-        data: {id: clickedButton.data("id")},
-        success: function(data) {
-            $(".row_" + clickedButton.data("id")).remove();
-            $(".duree").html((parseInt($('.duree').text())-1)+" j");
-        },
-        error: function() {
-            alert("Une erreur s'est produite lors de la requête.");
-        }
-    });
 });
 </script>
 
