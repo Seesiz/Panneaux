@@ -20,29 +20,9 @@ class Estimation extends CI_Controller {
                     $workSheet = $this->sheet->getData('DATA/sheet.xlsx');
                     $table = $workSheet->toArray();
         
-                    $data["sumPV"] = 0;
-                    $data["sumJI"] = 0;
                     $i = 0;
                     foreach($table as $row){
-                        try{
-                            if(is_numeric($row[$jirama])) {
-                                $data["sumJI"] += ($row[$jirama]);
-                            }
-                            if(is_numeric($row[$panneaux])) {
-                                $data["sumPV"] += ($row[$panneaux]);
-                            }
-                        } catch(Exception $e){
-                            redirect('Accueil/start?error='.$e);
-                        }
                         if($i != 0){
-                            //Ne supprimer pas, c'est encore utile
-                            // if(!isset($data["date"][date('Y-m-j',strtotime($row[$date]))][date('H',strtotime($row[$date]))])){
-                            //     $data["date"][date('Y-m-j',strtotime($row[$date]))]["jirama"][date('H',strtotime($row[$date]))] = 0;
-                            //     $data["date"][date('Y-m-j',strtotime($row[$date]))]["panneaux"][date('H',strtotime($row[$date]))] = 0;
-                            // }
-                            // $data["date"][date('Y-m-j',strtotime($row[$date]))]["jirama"][date('H',strtotime($row[$date]))] += $row[$jirama];
-                            // $data["date"][date('Y-m-j',strtotime($row[$date]))]["panneaux"][date('H',strtotime($row[$date]))] += $row[$panneaux];
-
                             if(!isset($data["date"][date('Y-m-j',strtotime($row[$date]))])){
                                 $data["date"][date('Y-m-j',strtotime($row[$date]))]['journalierJI'] = 0;
                                 $data["date"][date('Y-m-j',strtotime($row[$date]))]['journalierPV'] = 0;
@@ -52,25 +32,6 @@ class Estimation extends CI_Controller {
                         }
                         $i++;
                     }
-
-                    $data['sumPV'] /= 1000;
-                    $data['sumJI'] /= 1000;
-    
-                    $data['sumPV'] /= 10;
-                    $data['sumJI'] /= 10;
-    
-                    //Ne supprimer pas, c'est encore utile
-                    // foreach(array_keys($data['date']) as $row){
-                    //     $data['date'][$row]['journalierPV'] = 0;
-                    //     $data['date'][$row]['journalierJI'] = 0;
-                    //     foreach($data['date'][$row]['panneaux'] as $hour){
-                    //         $data['date'][$row]['journalierPV'] += $hour;
-                    //     }
-                    //     foreach($data['date'][$row]['jirama'] as $hour){
-                    //         $data['date'][$row]['journalierJI'] += $hour;
-                    //     }
-                    // }
-
                     foreach(array_keys($data['date']) as $row){
                         $data['date'][$row]['journalierPV'] /= 1000;
                         $data['date'][$row]['journalierJI'] /= 1000;
@@ -81,6 +42,7 @@ class Estimation extends CI_Controller {
                     $data['invalid'] = $this->sheet->insertConso($data);
 
                     $data['date'] = $this->sheet->getConsommation();
+                    $data['byMonth'] = $this->sheet->getBYMonth();
                     
                     $this->load->view("Estim/result", $data);
                     $this->load->view("component/footer");

@@ -12,6 +12,25 @@
         list-style: none;
     }
 </style>
+
+<?php 
+    $goal = 16039032;
+    $sumPV=0;
+    $sumJI=0;
+    $color = [];
+    $color[] = "#08c5d1";
+    $color[] = "#EEE6D8";
+    $color[] = "#DAAB3A";
+    $color[] = "#B67332";
+    $color[] = "#93441A";
+    $color[] = "#1E0F1C";
+    $color[] = "#A7001E";
+    $color[] = "#E2E9C0";
+    $color[] = "#7AA95C";
+    $color[] = "#955149";
+    $color[] = "#CA3C66";
+    $color[] = "#DB6A8F";
+?>
 <?php if(count($invalid)>0){ ?>
 <div class="position-absolute error col-12 d-flex justify-content-evenly m-4" style="z-index: 10;">
     <div class="alert er alert-danger col-5 text-center" role="alert">
@@ -30,18 +49,21 @@
 <div class="content">
     <div class="d-block col-9">
         <h3 class="col-12 text-center">Liste des données journalières:</h3>
-        <div class="col-12" style="height: 40vh; overflow-y: scroll">
+        <div class="col-12 consom" style="height: 0vh; overflow-y: scroll">
             <table class="table table-hover table-striped bg-white">
                 <thead>
                     <tr>
                         <th scope="col">Date</th>
-                        <th scope="col">Consommation en moyenne PV</th>
-                        <th scope="col">Consommation en moyenne JIRAMA</th>
+                        <th scope="col">Consommation PV</th>
+                        <th scope="col">Consommation JIRAMA</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($date as $row){?>
+                    <?php foreach($date as $row){
+                        $sumPV+=$row["PV"];
+                        $sumJI+=$row["JI"];
+                        ?>
                         <tr class="row_<?php echo $row['id'] ?>">
                             <td><?php echo date('j/M/Y', strtotime($row['date']))?></td>
                             <td><?php echo $row["PV"]." KW (".($row["PV"]*$this->session->jirama)." Ar)"?></td>
@@ -52,21 +74,91 @@
                 </tbody>
             </table>
         </div>
+        <button class="btn btn-secondary col-12 afficher"><i class="fa fa-eye" style="color: white"></i></button>
+
+        <h3 class="col-12 text-center">Liste des données menstruelles:</h3>
+        <div class="col-12 consomM" style="height: 0vh; overflow-y: scroll">
+            <table class="table table-hover table-striped bg-white">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Consommation PV</th>
+                        <th scope="col">Consommation JIRAMA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($byMonth as $row){?>
+                        <tr class="row_<?php echo $row['id'] ?>">
+                            <td><?php echo date('M/Y', strtotime('23-'.$row['mois'].'-'.$row['annee']))?></td>
+                            <td><?php echo $row["pv"]." KW (".($row["pv"]*$this->session->jirama)." Ar)"?></td>
+                            <td><?php echo $row["ji"]." KW (".($row["ji"]*$this->session->jirama)." Ar)"?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <button class="btn btn-secondary col-12 afficher1"><i class="fa fa-eye" style="color: white"></i></button>
+
         <div class="result col-11 g-2 justify-content-evenly m-5">
             <h3 class="col-12 text-center">Resultat:</h3>
-            <div class="col-12 d-flex justify-content-evenly">
-                <span class="box-result"><div class="box-value"><h5>Durée des données</h5><p><?php echo sizeof($date)." j" ?></p></div></span>
-                <span class="box-result"><div class="box-value"><h5>Jirama</h5><p><?php echo $sumJI." W" ?></p></div></span>
-                <span class="box-result"><div class="box-value"><h5>Panneaux</h5><p><?php echo $sumPV." W" ?></p></div></span>
-                <span class="box-result"><div class="box-value"><h5>Retour sur investissement</h5><p><?php echo $sumJI ?></p></div></span>
+            <div class="col-12 d-flex justify-content-evenly mb-3">
+                <span class="box-result"><div class="box-value"><h5>Durée des données</h5><p class="duree"><?php echo sizeof($date)." j" ?></p></div></span>
+                <span class="box-result"><div class="box-value"><h5>Jirama</h5><p><?php echo $sumJI." KW" ?></p></div></span>
+                <span class="box-result"><div class="box-value"><h5>Panneaux</h5><p><?php echo $sumPV." KW" ?></p></div></span>
+            </div>
+            <h3 class="col-12 text-center mb-1">Retour sur investissement:</h3>
+            <div class="progress">
+                <?php 
+                $i = 0;
+                $width = 0;
+                $lastWidth = 0;
+                foreach($byMonth as $row){
+                    $width = ((($row['pv']*$this->session->jirama)+($row['ji']*$this->session->jirama)) * 100)/$goal;
+                    ?>
+                    <div class="progress-bar" role="progressbar" style="background: <?php echo $color[$i]?>; width: <?php echo $width?>%" aria-valuenow="<?php echo $color[$i]?>" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="<?php echo date('M/Y', strtotime('23-'.$row['mois'].'-'.$row['annee']))?>"></div>
+                <?php  
+                $i++;
+                if($i == count($color)-1){
+                    $i = 0; 
+                }
+                } ?>
             </div>
         </div>
     </div>
 </div>
 <script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    var show =false;
+    var showM =false;
     setInterval(function(){
         $('.er').hide();
     }, 4000);
+
+    $('.afficher').on("click", function(){
+        if(!show){
+            $('.consom').css("height","30vh");
+            show = true;
+            $(this).html('<i class="fa fa-eye-slash" style="color: white"></i>');
+        } else{
+            $('.consom').css("height","0vh");
+            show = false;
+            $(this).html('<i class="fa fa-eye" style="color: white"></i>');
+        }
+    });
+    $('.afficher1').on("click", function(){
+        if(!showM){
+            $('.consomM').css("height","30vh");
+            showM = true;
+            $(this).html('<i class="fa fa-eye-slash" style="color: white"></i>');
+        } else{
+            $('.consomM').css("height","0vh");
+            showM = false;
+            $(this).html('<i class="fa fa-eye" style="color: white"></i>');
+        }
+    });
     $('.delete').on("click", function() {
     var clickedButton = $(this);
 
@@ -76,6 +168,7 @@
         data: {id: clickedButton.data("id")},
         success: function(data) {
             $(".row_" + clickedButton.data("id")).remove();
+            $(".duree").html((parseInt($('.duree').text())-1)+" j");
         },
         error: function() {
             alert("Une erreur s'est produite lors de la requête.");

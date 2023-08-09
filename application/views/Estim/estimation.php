@@ -75,7 +75,6 @@
     </div>
 </div>
 
-
 <script>
     $(document).ready(function(){
         let i = 0;

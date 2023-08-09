@@ -48,4 +48,10 @@ class Sheet extends CI_Model {
         $this->db->from("`conso-jour`");
         $this->db->delete();
     }
+
+    public function getBYMonth(){
+        $this->db->from('byMONTH');
+        $data = $this->db->get();
+        return $data->result_array();
+    }
 }
