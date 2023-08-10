@@ -77,13 +77,14 @@
         <button class="btn btn-secondary col-12 afficher"><i class="fa fa-eye" style="color: white"></i></button>
 
         <h3 class="col-12 text-center">Liste des données menstruelles:</h3>
-        <div class="col-12 consomM" style="height: 0vh; overflow-y: scroll">
+        <div class="col-12 consomM" style="height: 30vh; overflow-y: scroll">
             <table class="table table-hover table-striped bg-white">
                 <thead>
                     <tr>
                         <th scope="col">Date</th>
                         <th scope="col">Consommation PV</th>
                         <th scope="col">Consommation JIRAMA</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,6 +93,7 @@
                             <td><?php echo date('M/Y', strtotime('23-'.$row['mois'].'-'.$row['annee']))?></td>
                             <td><?php echo $row["pv"]." KW (".($row["pv"]*$this->session->jirama)." Ar)"?></td>
                             <td><?php echo $row["ji"]." KW (".($row["ji"]*$this->session->jirama)." Ar)"?></td>
+                            <td><input type="number" value="<?php echo $this->session->jirama ?>" data-target="<?php echo $row['mois'].$row['annee'] ?>" class="form-control jiramaMois"></td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -113,9 +115,10 @@
                 $width = 0;
                 $lastWidth = 0;
                 foreach($byMonth as $row){
-                    $width = ((($row['pv']*$this->session->jirama)+($row['ji']*$this->session->jirama)) * 100)/$goal;
+                    $width = ((($row['pv'])+($row['ji'])) * 100)/$goal;
                     ?>
-                    <div class="progress-bar" role="progressbar" style="background: <?php echo $color[$i]?>; width: <?php echo $width?>%" aria-valuenow="<?php echo $color[$i]?>" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="<?php echo date('M/Y', strtotime('23-'.$row['mois'].'-'.$row['annee']))?>"></div>
+                    <input type="hidden" name="id" id="width_<?php echo $row['mois'].$row['annee']?>" data-w="<?php echo $width ?>">
+                    <div class="progress-bar" id="bar_<?php echo $row['mois'].$row['annee']?>" role="progressbar" style="background: <?php echo $color[$i]?>; width: <?php echo $width*$this->session->jirama ?>%" aria-valuenow="<?php echo $color[$i]?>" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="<?php echo date('M/Y', strtotime('23-'.$row['mois'].'-'.$row['annee']))?>"></div>
                 <?php  
                 $i++;
                 if($i == count($color)-1){
@@ -130,7 +133,7 @@
 <script>
     $(document).ready(function(){
         var show =false;
-        var showM =false;
+        var showM =true;
         setInterval(function(){
             $('.er').hide();
         }, 4000);
@@ -172,6 +175,11 @@
                 alert("Une erreur s'est produite lors de la requête.");
             }
         });
+    })
+
+    $('.jiramaMois').on('keyup', function(){
+        var id = $(this).data('target');
+        $('#bar_'+id).css("width",(parseFloat($('#width_'+id).data('w'))*$(this).val())+"%");
     })
 
 });
